@@ -79,14 +79,23 @@ NODE_ENV=development
 ## 📁 Project Structure
 
 src/
+
  ├── controllers/     # Request handling
+ 
  ├── routes/          # API routes
+ 
  ├── services/        # Business logic
+ 
  ├── modules/         # Domain modules
+ 
  ├── middlewares/     # Express middlewares
+ 
  ├── utils/           # Helpers
+ 
  ├── app.ts           # Express app configuration
+ 
  └── server.ts        # Server entry point
+ 
 
 ---
 
