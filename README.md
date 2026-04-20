@@ -48,12 +48,19 @@ NODE_ENV=development
 ## 📁 Estructura del Proyecto
 src/
 ├── controllers/ # Manejo de requests
+
 ├── routes/ # Rutas de la API
+
 ├── services/ # Lógica de negocio
+
 ├── modules/ # Módulos de dominio
+
 ├── middlewares/ # Middlewares de Express
+
 ├── utils/ # Helpers
+
 ├── app.ts # Configuración de Express
+
 └── server.ts # Punto de entrada del servidor
 
 ## 🔗 API
