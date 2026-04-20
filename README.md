@@ -128,10 +128,6 @@ Se encuentran configuradas reglas de protección para `main`, `staging` y `devel
   - Build
   - Test
 
-### Nota
-Las reglas están configuradas pero actualmente no se encuentran activas debido a que el 
-repositorio pertenece a una organización con plan gratuito de GitHub. Se requiere un plan 
-GitHub Team o Enterprise para activarlas.
 
 ## 👥 Responsabilidades
 | Rol | Responsabilidad |
