@@ -51,10 +51,15 @@ pnpm start
 Create a `.env` file based on `.env.example`:
 
 SUPABASE_URL=
+
 SUPABASE_SERVICE_KEY=
+
 SUPABASE_ANON_KEY=
+
 BREVO_API_KEY=
+
 PORT=3000
+
 NODE_ENV=development
 
 ---
