@@ -1,6 +1,11 @@
 # ims-api
 Backend API for IMS Platform (Express, TypeScript, Prisma, PostgreSQL, Supabase) 
 ---
+## ⚠️ Status
+
+This repository contains the initial DevOps setup.
+The backend application has not been fully initialized yet.
+
 
 ## 🧱 Tech Stack
 
