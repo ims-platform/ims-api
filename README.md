@@ -54,8 +54,6 @@ SUPABASE_URL=
 
 SUPABASE_SERVICE_KEY=
 
-SUPABASE_ANON_KEY=
-
 BREVO_API_KEY=
 
 PORT=3000
@@ -169,12 +167,14 @@ A Pull Request will be approved only if:
 - Environment variables are used
 - Health endpoint `/api/v1/health` exists
 - CI checks pass
+- Lint checks pass
 
 ---
 
 ## 🔄 CI/CD
 
 - Pull Requests trigger GitHub Actions
+- Lint, build and tests are validated in CI
 - Build must pass before merge
 - Tests (if present) must pass
 
@@ -200,7 +200,7 @@ A Pull Request will be approved only if:
 
 ## 🚧 Backend Initialization (To be done by Backend Team)
 
-Suggested setup:
+Suggested initial setup by Backend Team:
 
 pnpm init
 pnpm add express @supabase/supabase-js
@@ -208,6 +208,14 @@ pnpm add -D typescript ts-node-dev @types/node @types/express
 
 npx tsc --init
 
+## 🧪 Expected Scripts
+
+The backend project should provide at least these scripts:
+
+- pnpm lint
+- pnpm build
+- pnpm test
+- pnpm dev
 ---
 
 ## 🚀 Workflow
