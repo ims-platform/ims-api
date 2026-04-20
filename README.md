@@ -1,227 +1,167 @@
 # ims-api
+API Backend para la Plataforma IMS (Express, TypeScript, Supabase Client, Supabase CLI)
 
-Backend API for IMS Platform  
-(Express, TypeScript, Supabase Client, Supabase CLI)
+## ⚠️ Estado
+Este repositorio contiene la configuración inicial de DevOps. La aplicación backend aún no ha sido completamente inicializada.
+El Equipo de Backend es responsable de implementar la lógica de la aplicación.
 
----
-
-## ⚠️ Status
-
-This repository contains the initial DevOps setup.  
-The backend application has **not been fully initialized yet**.
-
-The Backend Team is responsible for implementing the application logic.
-
----
-
-## 🧱 Tech Stack
-
+## 🧱 Stack Tecnológico
 - Express.js
 - TypeScript
 - Supabase Client
 - Supabase CLI
-- Zod (validation)
+- Zod (validación)
 - Brevo (emails)
 - Vitest (testing)
 
----
+## 🚀 Inicio Rápido
 
-## 🚀 Getting Started
-
-### Install dependencies
-
+### Instalar dependencias
 pnpm install
 
-### Run in development
-
+### Ejecutar en desarrollo
 pnpm dev
 
-### Build project
-
+### Compilar el proyecto
 pnpm build
 
-### Start production server
-
+### Iniciar servidor en producción
 pnpm start
 
----
-
-## ⚙️ Environment Variables
-
-Create a `.env` file based on `.env.example`:
-
+## ⚙️ Variables de Entorno
+Crear un archivo `.env` basado en `.env.example`:
 SUPABASE_URL=
-
 SUPABASE_SERVICE_KEY=
-
 BREVO_API_KEY=
-
 PORT=3000
-
 NODE_ENV=development
 
----
+## 🌍 Entornos
+| Entorno | Descripción |
+|---------|-------------|
+| development | Entorno local |
+| staging | Conectado a Supabase staging |
+| production | Conectado a Supabase producción |
 
-## 🌍 Environments
+⚠️ Nunca mezclar entornos ni credenciales.
 
-| Environment | Description |
-|------------|------------|
-| development | Local environment |
-| staging | Connected to Supabase staging |
-| production | Connected to Supabase production |
-
-⚠️ Never mix environments or credentials.
-
----
-
-## 📁 Project Structure
-
+## 📁 Estructura del Proyecto
 src/
+├── controllers/ # Manejo de requests
 
- ├── controllers/     # Request handling
- 
- ├── routes/          # API routes
- 
- ├── services/        # Business logic
- 
- ├── modules/         # Domain modules
- 
- ├── middlewares/     # Express middlewares
- 
- ├── utils/           # Helpers
- 
- ├── app.ts           # Express app configuration
- 
- └── server.ts        # Server entry point
- 
+├── routes/ # Rutas de la API
 
----
+├── services/ # Lógica de negocio
+
+├── modules/ # Módulos de dominio
+
+├── middlewares/ # Middlewares de Express
+
+├── utils/ # Helpers
+
+├── app.ts # Configuración de Express
+
+└── server.ts # Punto de entrada del servidor
 
 ## 🔗 API
-
-Base URL:
-
+URL Base:
 /api/v1
 
-Example endpoint (required):
-
+Endpoint requerido:
 GET /api/v1/health
 
-Response:
-
+Respuesta:
 { "status": "ok" }
 
----
-
 ## 🧪 Testing
-
-Run tests:
-
+Ejecutar tests:
 pnpm test
 
----
+## 🛡️ Reglas de Desarrollo
+- Validar todos los inputs usando Zod
+- Usar Supabase Client para todas las operaciones de datos
+- NO conectarse directamente a PostgreSQL
+- Mantener los controllers ligeros, mover la lógica a services
+- Seguir arquitectura modular
 
-## 🛡️ Development Rules
-
-- Validate all inputs using **Zod**
-- Use **Supabase Client** for all data operations
-- Do NOT connect directly to PostgreSQL
-- Keep controllers thin, move logic to services
-- Follow modular architecture
-
----
-
-## 🗄️ Database & Supabase
-
-This project uses **Supabase Client** instead of direct database access.
-
-- All database operations go through Supabase API
-- No direct PostgreSQL connections are used
-- Supabase CLI is used for migrations and local development
-
----
+## 🗄️ Base de Datos & Supabase
+Este proyecto usa Supabase Client en lugar de acceso directo a la base de datos.
+- Todas las operaciones de base de datos van a través de la API de Supabase
+- No se usan conexiones directas a PostgreSQL
+- Supabase CLI se usa para migraciones y desarrollo local
 
 ## ⚙️ Supabase CLI
 
-Initialize project (if needed):
-
+### Inicializar proyecto (si es necesario)
 npx supabase init
 
-Run locally:
-
+### Ejecutar localmente
 npx supabase start
 
-Apply migrations:
-
+### Aplicar migraciones
 npx supabase db push
 
----
-
-## ✅ Definition of Done (Backend)
-
-A Pull Request will be approved only if:
-
-- Project builds successfully
-- No runtime errors
-- No hardcoded credentials
-- Environment variables are used
-- Health endpoint `/api/v1/health` exists
-- CI checks pass
-- Lint checks pass
-
----
+## ✅ Definición de Done (Backend)
+Un Pull Request será aprobado únicamente si:
+- El proyecto compila correctamente
+- No hay errores en tiempo de ejecución
+- No hay credenciales hardcodeadas
+- Se usan variables de entorno
+- Existe el endpoint `/api/v1/health`
+- Los checks de CI pasan
+- Los checks de Lint pasan
 
 ## 🔄 CI/CD
+- Los Pull Requests activan GitHub Actions
+- Lint, build y tests son validados en el CI
+- El build debe pasar antes de hacer merge
+- Los tests (si existen) deben pasar
 
-- Pull Requests trigger GitHub Actions
-- Lint, build and tests are validated in CI
-- Build must pass before merge
-- Tests (if present) must pass
+## 🔒 Reglas de Protección de Ramas
+Se encuentran configuradas reglas de protección para `main`, `staging` y `develop`.
 
----
+### Reglas configuradas
+- No se permite push directo a ninguna de las tres ramas
+- Todo cambio debe ingresar mediante Pull Request
+- Los siguientes checks del CI deben pasar antes de hacer merge:
+  - Lint
+  - Build
+  - Test
 
-## 👥 Responsibilities
+### Nota
+Las reglas están configuradas pero actualmente no se encuentran activas debido a que el 
+repositorio pertenece a una organización con plan gratuito de GitHub. Se requiere un plan 
+GitHub Team o Enterprise para activarlas.
 
-| Role | Responsibility |
+## 👥 Responsabilidades
+| Rol | Responsabilidad |
 |-----|----------------|
-| Backend | API implementation |
-| DevOps | Infrastructure & CI/CD |
-| QA | Testing & validation |
+| Backend | Implementación de la API |
+| DevOps | Infraestructura & CI/CD |
+| QA | Testing & validación |
 
----
+## 📌 Notas
+- Este es el backend principal de la Plataforma IMS
+- Diseñado para escalabilidad e integraciones futuras
+- Evitar cambios que rompan funcionalidad sin coordinación previa
 
-## 📌 Notes
-
-- This is the core backend for IMS Platform
-- Designed for scalability and future integrations
-- Avoid breaking changes without coordination
-
----
-
-## 🚧 Backend Initialization (To be done by Backend Team)
-
-Suggested initial setup by Backend Team:
-
+## 🚧 Inicialización del Backend (A cargo del Equipo de Backend)
+Setup inicial sugerido:
 pnpm init
 pnpm add express @supabase/supabase-js
 pnpm add -D typescript ts-node-dev @types/node @types/express
-
 npx tsc --init
 
-## 🧪 Expected Scripts
-
-The backend project should provide at least these scripts:
-
+## 🧪 Scripts Esperados
+El proyecto backend debe proveer al menos estos scripts:
 - pnpm lint
 - pnpm build
 - pnpm test
 - pnpm dev
----
 
-## 🚀 Workflow
-
+## 🚀 Flujo de Trabajo
 develop → staging → main
 
-- develop: development
+- develop: desarrollo
 - staging: QA/testing
-- main: production
+- main: producción
