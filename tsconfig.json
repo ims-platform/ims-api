@@ -7,7 +7,14 @@
     "rootDir": "./src",
     "outDir": "./dist",
     "strict": true,
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "paths": {
+      "@/*": ["./src/*"],
+      "@controllers/*": ["./src/controllers/*"],
+      "@routes/*": ["./src/routes/*"],
+      "@services/*": ["./src/services/*"],
+      "@helpers/*": ["./src/helpers/*"]
+    }
   },
   "include": ["src/**/*"]
 }

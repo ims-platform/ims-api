@@ -1,5 +1,5 @@
-import tseslint from 'typescript-eslint';
 import { defineConfig } from 'eslint/config';
+import tseslint from 'typescript-eslint';
 
 export default defineConfig([
   tseslint.configs.recommendedTypeChecked,
@@ -10,6 +10,7 @@ export default defineConfig([
       'eslint.config.mjs',
       'src/database.types.ts',
       'commitlint.config.mjs',
+      'vitest.config.ts',
     ],
   },
   {
@@ -24,6 +25,8 @@ export default defineConfig([
     rules: {
       '@typescript-eslint/no-unused-vars': 'error',
       '@typescript-eslint/no-explicit-any': 'warn',
+      '@typescript-eslint/no-unsafe-argument': 'warn',
+      '@typescript-eslint/no-unsafe-argument': 'off',
     },
   },
 ]);
