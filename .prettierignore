@@ -1,0 +1,7 @@
+node_modules
+dist
+supabase
+src/supabase.types.ts
+.github
+.env.example
+.pnpm-lock.yaml
