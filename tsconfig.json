@@ -10,10 +10,8 @@
     "skipLibCheck": true,
     "paths": {
       "@/*": ["./src/*"],
-      "@controllers/*": ["./src/controllers/*"],
-      "@routes/*": ["./src/routes/*"],
-      "@services/*": ["./src/services/*"],
-      "@helpers/*": ["./src/helpers/*"]
+      "@institute/*": ["./src/modules/institute/*"],
+      "@routes/*": ["./src/modules/routes/*"]
     }
   },
   "include": ["src/**/*"]

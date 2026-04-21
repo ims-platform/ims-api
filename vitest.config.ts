@@ -10,10 +10,8 @@ export default defineConfig({
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src'),
-      '@controllers': path.resolve(__dirname, './src/controllers'),
-      '@routes': path.resolve(__dirname, './src/routes'),
-      '@services': path.resolve(__dirname, './src/services'),
-      '@helpers': path.resolve(__dirname, './src/helpers'),
+      '@institute': path.resolve(__dirname, './src/modules/institute'),
+      '@routes': path.resolve(__dirname, './src/modules/routes'),
     },
   },
 });

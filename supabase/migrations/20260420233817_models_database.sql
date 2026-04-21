@@ -7,90 +7,82 @@ CREATE TYPE payment_currency AS ENUM ('COP', 'USD');
 
 -- 1. Tabla de Instituciones (Tenants)
 CREATE TABLE public.institutions (
-    id             UUID         PRIMARY KEY DEFAULT gen_random_uuid(),
-    name           VARCHAR(255) NOT NULL,
-    subdomain      VARCHAR(100) UNIQUE NOT NULL,
+    id             UUID          PRIMARY KEY DEFAULT gen_random_uuid(),
+    name           TEXT          NOT NULL,
+    subdomain      TEXT          UNIQUE NOT NULL,
     status         tenant_status NOT NULL DEFAULT 'TRIAL',
-    trial_ends_at  TIMESTAMPTZ  NOT NULL,
-    created_at     TIMESTAMPTZ  NOT NULL DEFAULT NOW(),
-    updated_at     TIMESTAMPTZ  NOT NULL DEFAULT NOW()
+    created_at     TIMESTAMPTZ   NOT NULL DEFAULT NOW(),
+    updated_at     TIMESTAMPTZ   NOT NULL DEFAULT NOW()
 );
 
 -- 2. Tabla de planes de suscripciones
 CREATE TABLE public.plans (
-    id             UUID         PRIMARY KEY DEFAULT gen_random_uuid(),
-    name           VARCHAR(100) NOT NULL,
-    plan_type      plan_type    NOT NULL,
-    price          DECIMAL(10,2) NOT NULL,
+    id             UUID             PRIMARY KEY DEFAULT gen_random_uuid(),
+    name           TEXT             NOT NULL,
+    plan_type      plan_type        NOT NULL,
+    price          DECIMAL(10,2)    NOT NULL,
     currency       payment_currency NOT NULL DEFAULT 'COP',
-    duration_days  INTEGER      NOT NULL,
-    is_active      BOOLEAN      NOT NULL DEFAULT true,
-    created_at     TIMESTAMPTZ  NOT NULL DEFAULT NOW()
+    duration_days  INTEGER          NOT NULL,
+    display_order  INT              NOT NULL DEFAULT 0,
+    is_active      BOOLEAN          NOT NULL DEFAULT true,
+    created_at     TIMESTAMPTZ      NOT NULL DEFAULT NOW()
 );
 
--- 3. Tabla de perfiles de usuarios
-CREATE TABLE public.profiles (
-    id             UUID         PRIMARY KEY DEFAULT gen_random_uuid(),
-    auth_user_id   UUID         NOT NULL UNIQUE REFERENCES auth.users(id) ON DELETE CASCADE,
+-- 3. Tabla de usuarios (Director, Teacher, Student)
+CREATE TABLE public.users (
+    id             UUID         PRIMARY KEY REFERENCES auth.users(id) ON DELETE CASCADE,
     institution_id UUID         NOT NULL REFERENCES public.institutions(id) ON DELETE CASCADE,
-    role           user_role     NOT NULL,
-    first_name     VARCHAR(150) NOT NULL,
-    last_name      VARCHAR(150) NOT NULL,
+    role           user_role    NOT NULL,
+    first_name     TEXT         NOT NULL,
+    last_name      TEXT         NOT NULL,
     is_active      BOOLEAN      NOT NULL DEFAULT true,
     created_at     TIMESTAMPTZ  NOT NULL DEFAULT NOW(),
     updated_at     TIMESTAMPTZ  NOT NULL DEFAULT NOW()
 );
 
--- 4. Tabla de Estudiantes
-CREATE TABLE public.student_profiles (
-    id             UUID           PRIMARY KEY DEFAULT gen_random_uuid(),
-    profile_id     UUID           NOT NULL UNIQUE REFERENCES public.profiles(id) ON DELETE CASCADE,
-    status         student_status NOT NULL DEFAULT 'PENDING',
-    created_at     TIMESTAMPTZ    NOT NULL DEFAULT NOW(),
-    updated_at     TIMESTAMPTZ    NOT NULL DEFAULT NOW()
+-- 4. Tabla de datos específicos de estudiantes
+CREATE TABLE public.specific_data_students (
+    user_id    UUID           PRIMARY KEY REFERENCES public.users(id) ON DELETE CASCADE,
+    status     student_status NOT NULL DEFAULT 'PENDING',
+    created_at TIMESTAMPTZ    NOT NULL DEFAULT NOW(),
+    updated_at TIMESTAMPTZ    NOT NULL DEFAULT NOW()
 );
 
--- 5. Tabla de Suscripciones
+-- 5. Tabla de suscripciones
 CREATE TABLE public.subscriptions (
-    id                    UUID    PRIMARY KEY DEFAULT gen_random_uuid(),
-    institution_id        UUID    NOT NULL REFERENCES public.institutions(id) ON DELETE CASCADE,
-    plan_id               UUID    NOT NULL REFERENCES public.plans(id),
-    mp_subscription_id    VARCHAR(255),
-    starts_at             TIMESTAMPTZ NOT NULL DEFAULT NOW(),
-    ends_at               TIMESTAMPTZ,
-    next_billing_date     TIMESTAMPTZ,
-    is_active             BOOLEAN NOT NULL DEFAULT true,
-    created_at            TIMESTAMPTZ NOT NULL DEFAULT NOW(),
-    updated_at            TIMESTAMPTZ NOT NULL DEFAULT NOW()
+    id                 UUID             PRIMARY KEY DEFAULT gen_random_uuid(),
+    institution_id     UUID             NOT NULL REFERENCES public.institutions(id) ON DELETE CASCADE,
+    plan_id            UUID             NOT NULL REFERENCES public.plans(id),
+    mp_subscription_id TEXT,
+    starts_at          TIMESTAMPTZ      NOT NULL DEFAULT NOW(),
+    ends_at            TIMESTAMPTZ,
+    is_active          BOOLEAN          NOT NULL DEFAULT true,
+    created_at         TIMESTAMPTZ      NOT NULL DEFAULT NOW(),
+    updated_at         TIMESTAMPTZ      NOT NULL DEFAULT NOW()
 );
 
 -- 6. Tabla de Historial de Pagos
 CREATE TABLE public.payment_history (
-    id                 UUID           PRIMARY KEY DEFAULT gen_random_uuid(),
-    institution_id     UUID           NOT NULL REFERENCES public.institutions(id),
-    subscription_id    UUID           NOT NULL REFERENCES public.subscriptions(id),
-    mp_payment_id      VARCHAR(255)   UNIQUE NOT NULL,
-    amount             DECIMAL(10, 2) NOT NULL,
-    currency           payment_currency NOT NULL DEFAULT 'COP',
-    status             payment_status NOT NULL,
-    receipt_url        TEXT,
-    paid_at            TIMESTAMPTZ    NOT NULL DEFAULT NOW()
+    id              UUID             PRIMARY KEY DEFAULT gen_random_uuid(),
+    institution_id  UUID             NOT NULL REFERENCES public.institutions(id),
+    subscription_id UUID             NOT NULL REFERENCES public.subscriptions(id),
+    mp_payment_id   TEXT             UNIQUE NOT NULL,
+    amount          DECIMAL(10, 2)   NOT NULL,
+    currency        payment_currency NOT NULL DEFAULT 'COP',
+    status          payment_status   NOT NULL,
+    receipt_url     TEXT,
+    paid_at         TIMESTAMPTZ      NOT NULL DEFAULT NOW()
 );
 
--- ÍNDICES DE RENDIMIENTO
 CREATE INDEX idx_institutions_subdomain       ON public.institutions(subdomain);
 CREATE INDEX idx_institutions_status          ON public.institutions(status);
-CREATE INDEX idx_profiles_auth_user_id        ON public.profiles(auth_user_id);
-CREATE INDEX idx_profiles_institution_id      ON public.profiles(institution_id);
-CREATE INDEX idx_profiles_role                ON public.profiles(role);
-
-CREATE INDEX idx_student_profiles_profile_id  ON public.student_profiles(profile_id);
-CREATE INDEX idx_student_profiles_status      ON public.student_profiles(status);
-
+CREATE INDEX idx_users_institution_id         ON public.users(institution_id);
+CREATE INDEX idx_users_role                   ON public.users(role);
+CREATE INDEX idx_specific_data_students_status ON public.specific_data_students(status);
+CREATE INDEX idx_plans_display_order          ON public.plans(display_order);
 CREATE INDEX idx_subscriptions_institution_id ON public.subscriptions(institution_id);
 CREATE INDEX idx_subscriptions_plan_id        ON public.subscriptions(plan_id);
 CREATE INDEX idx_subscriptions_is_active      ON public.subscriptions(is_active);
-
 CREATE INDEX idx_payment_history_institution  ON public.payment_history(institution_id);
 CREATE INDEX idx_payment_history_subscription ON public.payment_history(subscription_id);
 CREATE INDEX idx_payment_history_status       ON public.payment_history(status);

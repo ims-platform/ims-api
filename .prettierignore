@@ -1,7 +1,7 @@
 node_modules
 dist
 supabase
-src/supabase.types.ts
+src/database.types.ts
 .github
 .env.example
 .pnpm-lock.yaml
