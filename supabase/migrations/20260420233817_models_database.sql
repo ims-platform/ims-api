@@ -40,15 +40,23 @@ CREATE TABLE public.users (
     updated_at     TIMESTAMPTZ  NOT NULL DEFAULT NOW()
 );
 
--- 4. Tabla de datos específicos de estudiantes
-CREATE TABLE public.specific_data_students (
-    user_id    UUID           PRIMARY KEY REFERENCES public.users(id) ON DELETE CASCADE,
-    status     student_status NOT NULL DEFAULT 'PENDING',
-    created_at TIMESTAMPTZ    NOT NULL DEFAULT NOW(),
-    updated_at TIMESTAMPTZ    NOT NULL DEFAULT NOW()
+-- 4. Tabla de directores
+CREATE TABLE public.directors (
+    id             UUID        PRIMARY KEY REFERENCES public.users(id) ON DELETE CASCADE
 );
 
--- 5. Tabla de suscripciones
+-- 5. Tabla de profesores
+CREATE TABLE public.teachers (
+    id             UUID        PRIMARY KEY REFERENCES public.users(id) ON DELETE CASCADE
+);
+
+-- 6. Tabla de estudiantes
+CREATE TABLE public.students (
+    id             UUID           PRIMARY KEY REFERENCES public.users(id) ON DELETE CASCADE,
+    status         student_status NOT NULL DEFAULT 'PENDING'
+);
+
+-- 7. Tabla de suscripciones
 CREATE TABLE public.subscriptions (
     id                 UUID             PRIMARY KEY DEFAULT gen_random_uuid(),
     institution_id     UUID             NOT NULL REFERENCES public.institutions(id) ON DELETE CASCADE,
@@ -61,7 +69,7 @@ CREATE TABLE public.subscriptions (
     updated_at         TIMESTAMPTZ      NOT NULL DEFAULT NOW()
 );
 
--- 6. Tabla de Historial de Pagos
+-- 8. Tabla de Historial de Pagos
 CREATE TABLE public.payment_history (
     id              UUID             PRIMARY KEY DEFAULT gen_random_uuid(),
     institution_id  UUID             NOT NULL REFERENCES public.institutions(id),
@@ -74,15 +82,17 @@ CREATE TABLE public.payment_history (
     paid_at         TIMESTAMPTZ      NOT NULL DEFAULT NOW()
 );
 
-CREATE INDEX idx_institutions_subdomain       ON public.institutions(subdomain);
-CREATE INDEX idx_institutions_status          ON public.institutions(status);
-CREATE INDEX idx_users_institution_id         ON public.users(institution_id);
-CREATE INDEX idx_users_role                   ON public.users(role);
-CREATE INDEX idx_specific_data_students_status ON public.specific_data_students(status);
-CREATE INDEX idx_plans_display_order          ON public.plans(display_order);
-CREATE INDEX idx_subscriptions_institution_id ON public.subscriptions(institution_id);
-CREATE INDEX idx_subscriptions_plan_id        ON public.subscriptions(plan_id);
-CREATE INDEX idx_subscriptions_is_active      ON public.subscriptions(is_active);
-CREATE INDEX idx_payment_history_institution  ON public.payment_history(institution_id);
-CREATE INDEX idx_payment_history_subscription ON public.payment_history(subscription_id);
-CREATE INDEX idx_payment_history_status       ON public.payment_history(status);
+-- Índices
+CREATE INDEX idx_institutions_subdomain        ON public.institutions(subdomain);
+CREATE INDEX idx_institutions_status           ON public.institutions(status);
+CREATE INDEX idx_users_institution_id          ON public.users(institution_id);
+CREATE INDEX idx_users_role                    ON public.users(role);
+CREATE INDEX idx_users_is_active               ON public.users(is_active);
+CREATE INDEX idx_students_status               ON public.students(status);
+CREATE INDEX idx_plans_display_order           ON public.plans(display_order);
+CREATE INDEX idx_subscriptions_institution_id  ON public.subscriptions(institution_id);
+CREATE INDEX idx_subscriptions_plan_id         ON public.subscriptions(plan_id);
+CREATE INDEX idx_subscriptions_is_active       ON public.subscriptions(is_active);
+CREATE INDEX idx_payment_history_institution   ON public.payment_history(institution_id);
+CREATE INDEX idx_payment_history_subscription  ON public.payment_history(subscription_id);
+CREATE INDEX idx_payment_history_status        ON public.payment_history(status);
