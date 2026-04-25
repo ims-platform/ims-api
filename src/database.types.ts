@@ -134,6 +134,7 @@ export type Database = {
       }
       plans: {
         Row: {
+          code: string | null
           created_at: string
           currency: Database["public"]["Enums"]["payment_currency"]
           display_order: number
@@ -145,6 +146,7 @@ export type Database = {
           price: number
         }
         Insert: {
+          code?: string | null
           created_at?: string
           currency?: Database["public"]["Enums"]["payment_currency"]
           display_order?: number
@@ -156,6 +158,7 @@ export type Database = {
           price: number
         }
         Update: {
+          code?: string | null
           created_at?: string
           currency?: Database["public"]["Enums"]["payment_currency"]
           display_order?: number
@@ -308,7 +311,17 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      register_tenant_complete: {
+        Args: {
+          p_auth_user_id: string
+          p_first_name: string
+          p_institution_name: string
+          p_last_name: string
+          p_plan_code: string
+          p_subdomain: string
+        }
+        Returns: Json
+      }
     }
     Enums: {
       payment_currency: "COP" | "USD"
