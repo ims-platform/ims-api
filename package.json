@@ -11,8 +11,9 @@
     "lint": "eslint src/",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "supabase:start": "npx supabase start",
-    "supabase:reset": "npx supabase db reset",
+    "supabase:start": "supabase start",
+    "supabase:reset": "supabase db reset",
+    "supabase:migration": "supabase migration new",
     "supabase:types": "npx supabase gen types typescript --local > src/database.types.ts"
   },
   "dependencies": {
@@ -29,6 +30,7 @@
     "@types/node": "^25.6.0",
     "eslint": "^10.2.1",
     "prettier": "^3.8.3",
+    "supabase": "^2.95.2",
     "ts-node-dev": "^2.0.0",
     "tsc-alias": "^1.8.16",
     "tsconfig-paths": "^4.2.0",

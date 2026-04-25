@@ -1,7 +1,7 @@
 import { registerInstituteService } from '@institute/services/institute.service';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 
-import { supabaseAdmin } from '@/modules/core/supabase.client';
+import { supabaseAdmin } from '@/modules/core/config/supabase.client';
 
 // Mock del cliente de Supabase
 vi.mock('@/modules/core/supabase.client', () => {
