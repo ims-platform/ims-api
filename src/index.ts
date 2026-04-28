@@ -1,12 +1,8 @@
-import express from 'express';
+import 'dotenv/config';
 
-import router from '@routes/index';
+import app from '@/app';
 
-const app = express();
-const PORT = process.env.PORT || 3000;
-
-app.use(express.json());
-app.use('/api/v1', router);
+const PORT = process.env.PORT ?? 3000;
 
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}/api/v1`);

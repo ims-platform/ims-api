@@ -9,8 +9,9 @@
   "arrowParens": "always",
   "plugins": ["@trivago/prettier-plugin-sort-imports"],
   "importOrder": [
+    "^(dotenv(.*)$)",
     "^(express(.*)$)|^(express$)",
-    "^(cors(.*)$)|^(dotenv(.*)$)",
+    "^(cors(.*)$)",
     "<THIRD_PARTY_MODULES>",
     "^@/(.*)$",
     "^[./]"
