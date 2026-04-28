@@ -26,6 +26,9 @@ export default defineConfig([
       '@typescript-eslint/no-unused-vars': 'error',
       '@typescript-eslint/no-explicit-any': 'warn',
       '@typescript-eslint/no-unsafe-argument': 'off',
+      // Las siguientes reglas se desactivan porque @supabase/supabase-js usa genéricos `any` internamente en su cliente tipado.
+      // Activarlas genera falsos positivos en cada llamada a .from(), .select(), .rpc(), etc.
+      // El tipado real está garantizado por database.types.ts generado por Supabase CLI.
       '@typescript-eslint/no-unsafe-assignment': 'off',
       '@typescript-eslint/no-unsafe-call': 'off',
       '@typescript-eslint/no-unsafe-member-access': 'off',

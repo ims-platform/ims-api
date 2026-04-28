@@ -11,8 +11,8 @@
     "lint": "eslint src/",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
-    "supabase:start": "supabase start",
-    "supabase:reset": "supabase db reset",
+    "supabase:start": "npx supabase start",
+    "supabase:reset": "npx supabase db reset",
     "supabase:migration": "supabase migration new",
     "supabase:types": "npx supabase gen types typescript --local > src/database.types.ts"
   },
