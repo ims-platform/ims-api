@@ -9,7 +9,7 @@ export const authService = {
       email_confirm: true,
     });
 
-    if (error ?? !data.user) {
+    if (error || !data.user) {
       if (error?.message.includes('already registered')) {
         throw HttpException.conflict('El correo ya está registrado');
       }
@@ -28,7 +28,7 @@ export const authService = {
       password,
     });
 
-    if (error ?? !data.session) {
+    if (error || !data.session) {
       throw HttpException.internalServer('Error al generar sesión automática');
     }
     return data.session;
