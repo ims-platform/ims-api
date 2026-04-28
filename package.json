@@ -13,7 +13,7 @@
     "format:check": "prettier --check .",
     "supabase:start": "npx supabase start",
     "supabase:reset": "npx supabase db reset",
-    "supabase:migration": "supabase migration new",
+    "supabase:migration": "npx supabase migration new",
     "supabase:types": "npx supabase gen types typescript --local > src/database.types.ts"
   },
   "dependencies": {
