@@ -10,7 +10,7 @@ const app = express();
 const corsOptions = {
   origin: [
     process.env.FRONTEND_URL || 'http://localhost:3000',
-    /^http:\/\/localhost:\d+$/, // Permite cualquier puerto local (ej. 3000, 5000, 8080)
+    /^http:\/\/localhost:\d+$/, // Permite cualquier puerto local (ej. 3000, 5000, 8080). Se deja asi hasta que exista un dominio fijo.
   ],
 };
 
