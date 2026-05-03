@@ -4,8 +4,8 @@ import instituteRoutes from '@/modules/institute/routes/institute.routes';
 
 const router = Router();
 
-router.get('/', (_req, res) => {
-  res.json({ message: 'Api is working!' });
+router.get('/health', (_req, res) => {
+  res.status(200).json({ status: 'ok' });
 });
 
 router.use('/institutions', instituteRoutes);
