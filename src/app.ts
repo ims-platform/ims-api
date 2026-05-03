@@ -7,9 +7,11 @@ import router from '@/modules/routes/index';
 
 const app = express();
 
-// TODO: Configurar CORS para permitir acceso solo al dominio del Frontend en producción.
-// Actualmente está configurado por defecto permitiendo acceso a cualquier origen '*'.
-app.use(cors());
+const corsOptions = {
+  origin: process.env.FRONTEND_URL || '*', // Usa el dominio específico o permite todo si no está definido
+};
+
+app.use(cors(corsOptions));
 
 app.use(express.json());
 app.use('/api/v1', router);
