@@ -32,7 +32,9 @@ describe('checkSubdomainSchema', () => {
     const result = checkSubdomainSchema.safeParse(invalidData);
     expect(result.success).toBe(false);
     if (!result.success) {
-      expect(result.error.issues[0].message).toBe('El subdominio solo puede contener letras minúsculas, números y guiones');
+      expect(result.error.issues[0].message).toBe(
+        'El subdominio solo puede contener letras minúsculas, números y guiones',
+      );
     }
   });
 
@@ -41,7 +43,9 @@ describe('checkSubdomainSchema', () => {
     const result = checkSubdomainSchema.safeParse(invalidData);
     expect(result.success).toBe(false);
     if (!result.success) {
-      expect(result.error.issues[0].message).toBe('El subdominio solo puede contener letras minúsculas, números y guiones');
+      expect(result.error.issues[0].message).toBe(
+        'El subdominio solo puede contener letras minúsculas, números y guiones',
+      );
     }
   });
 
@@ -50,7 +54,9 @@ describe('checkSubdomainSchema', () => {
     const result = checkSubdomainSchema.safeParse(invalidData);
     expect(result.success).toBe(false);
     if (!result.success) {
-      expect(result.error.issues[0].message).toBe('El subdominio solo puede contener letras minúsculas, números y guiones');
+      expect(result.error.issues[0].message).toBe(
+        'El subdominio solo puede contener letras minúsculas, números y guiones',
+      );
     }
   });
 });
